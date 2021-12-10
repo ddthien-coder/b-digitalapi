@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devteam.mapper.TagMapper">
+
+    <resultMap id="tag" type="com.devteam.entity.Tag">
+        <id property="id" column="id"/>
+        <result property="name" column="tag_name"/>
+        <result property="color" column="color"/>
+    </resultMap>
+
+    <select id="getTagList" resultMap="tag">
+        select id, tag_name, color from tag order by id desc
+    </select>
+
+    <select id="getTagListNotId" resultMap="tag">
+        select tag_name, color from tag order by id desc
+    </select>
+
+    <select id="getTagListByBlogId" resultMap="tag">
+        select t.tag_name, t.color
+        from blog_tag as bt left join tag as t on bt.tag_id=t.id
+        where bt.blog_id=#{blogId}
+    </select>
+
+    <insert id="saveTag" parameterType="com.devteam.entity.Tag" useGeneratedKeys="true" keyProperty="id">
+        insert into tag (tag_name, color) values (#{name}, #{color})
+    </insert>
+
+    <select id="getTagById" resultMap="tag">
+        select id, tag_name, color from tag where id=#{id}
+    </select>
+
+    <select id="getTagByName" resultMap="tag">
+        select id, tag_name, color from tag where tag_name=#{name}
+    </select>
+
+    <delete id="deleteTagById">
+        delete from tag where id=#{id}
+    </delete>
+
+    <update id="updateTag">
+        update tag set tag_name=#{name}, color=#{color} where id=#{id}
+    </update>
+
+    <resultMap id="tagBlogCount" type="com.devteam.model.vo.TagBlogCount">
+        <id property="id" column="tag_id"/>
+        <result property="value" column="blog_count"/>
+    </resultMap>
+
+    <select id="getTagBlogCount" resultMap="tagBlogCount">
+        select tag_id, count(tag_id) as blog_count from blog_tag group by tag_id
+    </select>
+</mapper>

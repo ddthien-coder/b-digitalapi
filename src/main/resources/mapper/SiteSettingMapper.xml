@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devteam.mapper.SiteSettingMapper">
+
+    <select id="getList" resultType="com.devteam.entity.SiteSetting">
+        select * from site_setting
+    </select>
+
+    <select id="getFriendInfo" resultType="com.devteam.entity.SiteSetting">
+        select * from site_setting where type=4
+    </select>
+
+    <select id="getWebTitleSuffix" resultType="java.lang.String">
+        select value from site_setting where name='webTitleSuffix'
+    </select>
+
+    <update id="updateSiteSetting">
+        update site_setting set value=#{value} where id=#{id}
+    </update>
+
+    <delete id="deleteSiteSettingById">
+        delete from site_setting where id=#{id}
+    </delete>
+
+    <insert id="saveSiteSetting" useGeneratedKeys="true" keyProperty="id">
+        insert into site_setting (name, value, type) values (#{name}, #{value}, #{type})
+    </insert>
+
+    <update id="updateFriendInfoContent">
+        update site_setting set value=#{content} where name='friendContent'
+    </update>
+
+    <update id="updateFriendInfoCommentEnabled">
+        update site_setting set value=#{commentEnabled} where name='friendCommentEnabled'
+    </update>
+</mapper>

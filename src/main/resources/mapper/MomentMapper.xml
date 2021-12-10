@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devteam.mapper.MomentMapper">
+
+    <resultMap id="moment" type="com.devteam.entity.Moment">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="createTime" column="create_time"/>
+        <result property="likes" column="likes"/>
+        <result property="published" column="is_published"/>
+    </resultMap>
+
+    <select id="getMomentList" resultMap="moment">
+        select id, content, create_time, likes, is_published from moment
+    </select>
+
+    <update id="addLikeByMomentId">
+        update moment set likes=likes+1 where id=#{momentId}
+    </update>
+
+    <update id="updateMomentPublishedById">
+        update moment set is_published=#{published} where id=#{momentId}
+    </update>
+
+    <select id="getMomentById" resultMap="moment">
+        select id, content, create_time, likes, is_published from moment where id=#{id}
+    </select>
+
+    <delete id="deleteMomentById">
+        delete from moment where id=#{id}
+    </delete>
+
+    <insert id="saveMoment" parameterType="com.devteam.entity.Moment" useGeneratedKeys="true" keyProperty="id">
+        insert into moment (content, create_time, likes, is_published) values (#{content}, #{createTime}, #{likes}, #{published})
+    </insert>
+
+    <update id="updateMoment">
+        update moment set content=#{content}, create_time=#{createTime}, likes=#{likes}, is_published=#{published} where id=#{id}
+    </update>
+</mapper>

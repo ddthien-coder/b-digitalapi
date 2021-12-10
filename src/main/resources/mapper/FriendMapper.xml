@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devteam.mapper.FriendMapper">
+    <resultMap id="friend" type="com.devteam.entity.Friend">
+        <id property="id" column="id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="description" column="description"/>
+        <result property="website" column="website"/>
+        <result property="avatar" column="avatar"/>
+        <result property="published" column="is_published"/>
+        <result property="views" column="views"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <select id="getFriendList" resultMap="friend">
+        select id, nickname, description, website, avatar, is_published, views, create_time from friend
+    </select>
+
+    <resultMap id="friendVO" type="com.devteam.model.vo.Friend">
+        <result property="nickname" column="nickname"/>
+        <result property="description" column="description"/>
+        <result property="website" column="website"/>
+        <result property="avatar" column="avatar"/>
+    </resultMap>
+
+    <select id="getFriendVOList" resultMap="friendVO">
+        select nickname, description, website, avatar from friend where is_published=true order by rand()
+    </select>
+
+    <update id="updateFriendPublishedById">
+        update friend set is_published=#{published} where id=#{id}
+    </update>
+
+    <insert id="saveFriend" parameterType="com.devteam.entity.Friend" useGeneratedKeys="true" keyProperty="id">
+        insert into friend (nickname, description, website, avatar, is_published, views, create_time)
+        values (#{nickname}, #{description}, #{website}, #{avatar}, #{published}, #{views}, #{createTime})
+    </insert>
+
+    <update id="updateFriend">
+        update friend set nickname=#{nickname}, description=#{description}, website=#{website}, avatar=#{avatar}, is_published=#{published}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteFriend">
+        delete from friend where id=#{id}
+    </delete>
+
+    <update id="updateViewsByNickname">
+        update friend set views=views+1 where nickname=#{nickname}
+    </update>
+</mapper>

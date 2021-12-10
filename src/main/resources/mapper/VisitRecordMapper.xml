@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.devteam.mapper.VisitRecordMapper">
+
+    <resultMap id="visitRecord" type="com.devteam.entity.VisitRecord">
+        <id property="id" column="id"/>
+        <result property="pv" column="pv"/>
+        <result property="uv" column="uv"/>
+        <result property="date" column="date"/>
+    </resultMap>
+
+    <select id="getVisitRecordListByLimit" resultMap="visitRecord">
+        select pv, uv, date from visit_record order by id desc limit #{limit}
+    </select>
+
+    <insert id="saveVisitRecord" parameterType="com.devteam.entity.VisitRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into visit_record (pv, uv, date) values (#{pv}, #{uv}, #{date})
+    </insert>
+</mapper>

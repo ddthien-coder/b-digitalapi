@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devteam.mapper.HomeMapper">
+
+    <resultMap id="home" type="com.devteam.entity.Home">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="link" column="link"/>
+    </resultMap>
+
+    <select id="getList" resultMap="home">
+        select id, title, description, link from home order by id desc
+    </select>
+
+    <insert id="saveHome" parameterType="com.devteam.entity.Home" useGeneratedKeys="true" keyProperty="id">
+        insert into home (title, description, link) values (#{title},  #{description}, #{link})
+    </insert>
+
+    <select id="getHomeById" resultMap="home">
+        select id, title, description, link desc from home where id=#{id}
+    </select>
+
+    <delete id="deleteHomeById">
+        delete from home where id=#{id}
+    </delete>
+
+    <update id="updateHome">
+        update home set title=#{title}, description=#{description}, link=#{link}   where id=#{id}
+    </update>
+</mapper>
