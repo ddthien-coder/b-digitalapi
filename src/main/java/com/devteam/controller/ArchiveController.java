@@ -16,7 +16,7 @@ public class ArchiveController {
     BlogService blogService;
 
 
-	@VisitLogger(behavior = "Visit page", content = "showrrel")
+	@VisitLogger(behavior = "Visit page", content = "showreel")
 	@GetMapping("/archives")
 	public Result archives() {
 		Map<String, Object> archiveBlogMap = blogService.getArchiveBlogAndCountByIsPublished();

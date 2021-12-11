@@ -65,7 +65,7 @@ public class BlogController {
 					return Result.create(403, "Token has expired, please re-verify the password！");
 				}
 			} else {
-				return Result.create(403, "This showrrel is password protected, please verify the password ！");
+				return Result.create(403, "This showreel is password protected, please verify the password ！");
 			}
 			blog.setPassword("");
 		}
